@@ -3,6 +3,7 @@ import UIKit
 
 class ViewController: UIViewController {
    
+    @IBOutlet weak var equalButton: customButton!
     @IBOutlet weak var firstNumberLabel: UILabel!
     @IBOutlet weak var resultLabel: UILabel!
     var firstNumber:Double = 0
@@ -16,6 +17,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+    }
+    override func viewDidAppear(_ animated: Bool) {
+         equalButton.isEnabled = false
     }
     
     @IBAction func numberButton(_ sender: customButton)
@@ -38,7 +43,7 @@ class ViewController: UIViewController {
     }
     @IBAction func operateButton(_ sender: customButton)
     {
-        
+        equalButton.isEnabled = false
         if sender.tag != 18 && sender.tag != 17 && resultLabel.text != ""
         {
             previousNumber = Double(resultLabel.text!)!
@@ -46,22 +51,32 @@ class ViewController: UIViewController {
             case 11 :
                 //sum
                 firstNumberLabel.text = String(previousNumber) + "+"
+                resultLabel.text = "0"
+                firstNumber = 0
                 break
             case 12 :
                 //substract
                 firstNumberLabel.text = String(previousNumber) + "-"
+                resultLabel.text = "0"
+                firstNumber = 0
                 break
             case 13 :
                 //multiply
                 firstNumberLabel.text = String(previousNumber) + "x"
+                resultLabel.text = "0"
+                firstNumber = 0
                 break
             case 14 :
                 //divide
                 firstNumberLabel.text = String(previousNumber) + "÷"
+                resultLabel.text = "0"
+                firstNumber = 0
                 break
             case 15 :
                 //reminder operator
                 firstNumberLabel.text = String(previousNumber) + "%"
+                resultLabel.text = "0"
+                firstNumber = 0
                 break
                 //wher back button
             default:
@@ -74,9 +89,12 @@ class ViewController: UIViewController {
            
             operation = sender.tag
             perfomingMath = true
+            equalButton.isEnabled = true
         }
+        
         else if sender.tag == 17
         {
+       
             switch (operation)
             {
             case 11 :
@@ -119,9 +137,13 @@ class ViewController: UIViewController {
                     
                 }
                 break
-            default:
+            case 15 :
                 resultLabel.text = String(previousNumber.truncatingRemainder(dividingBy: firstNumber))
                 firstNumberLabel.text = String(previousNumber) + "%" + String(firstNumber)
+                break
+            default :
+                equalButton.isEnabled = false
+                firstNumberLabel.text = ""
                 break
             }
       
