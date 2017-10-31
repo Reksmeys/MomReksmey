@@ -22,6 +22,7 @@
 		82458CA91FA075C500C4EE36 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		82458CAC1FA075C500C4EE36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		82458CAE1FA075C500C4EE36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FEFCCBFE1FA837B0006F90CB /* calculator11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calculator11.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +59,7 @@
 				82458CA41FA075C500C4EE36 /* ViewController.swift */,
 				82458CA61FA075C500C4EE36 /* Main.storyboard */,
 				82458CA91FA075C500C4EE36 /* Assets.xcassets */,
+				FEFCCBFE1FA837B0006F90CB /* calculator11.png */,
 				82458CAB1FA075C500C4EE36 /* LaunchScreen.storyboard */,
 				82458CAE1FA075C500C4EE36 /* Info.plist */,
 			);

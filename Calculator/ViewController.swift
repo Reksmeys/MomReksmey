@@ -2,14 +2,16 @@
 import UIKit
 
 class ViewController: UIViewController {
-   
+    
     @IBOutlet weak var equalButton: customButton!
-    @IBOutlet weak var firstNumberLabel: UILabel!
+    @IBOutlet weak var currentNumberLabel: UILabel!
     @IBOutlet weak var resultLabel: UILabel!
-    var firstNumber:Double = 0
+    
+    var currentNumber:Double = 0
     var perfomingMath = false
     var operation = 0
     var previousNumber:Double = 0
+    var result: Double = 0
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -17,24 +19,24 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
     }
     override func viewDidAppear(_ animated: Bool) {
-         equalButton.isEnabled = false
+        equalButton.isEnabled = false
     }
     
     @IBAction func numberButton(_ sender: customButton)
     {
         if perfomingMath == true {
             resultLabel.text = String(sender.tag - 1)
-            firstNumber = Double(resultLabel.text!)!
+            currentNumber = Double(resultLabel.text!)!
             if resultLabel.text == "0" + String(sender.tag - 1){
                 resultLabel.text = String(sender.tag - 1)
             }
             perfomingMath = false
         }else{
             resultLabel.text = resultLabel.text! + String(sender.tag - 1)
-            firstNumber = Double(resultLabel.text!)!
+            currentNumber = Double(resultLabel.text!)!
             if resultLabel.text == "0" + String(sender.tag - 1){
                 resultLabel.text = String(sender.tag - 1)
             }
@@ -43,119 +45,155 @@ class ViewController: UIViewController {
     }
     @IBAction func operateButton(_ sender: customButton)
     {
+        print(sender.tag)
         equalButton.isEnabled = false
         if sender.tag != 18 && sender.tag != 17 && resultLabel.text != ""
         {
             previousNumber = Double(resultLabel.text!)!
+            currentNumber = Double(resultLabel.text!)!
+            
             switch (sender.tag) {
             case 11 :
                 //sum
-                firstNumberLabel.text = String(previousNumber) + "+"
+                result += currentNumber
+                currentNumberLabel.text = String(format: "%g", result) + "+"
                 resultLabel.text = "0"
-                firstNumber = 0
+                currentNumber = 0
                 break
             case 12 :
                 //substract
-                firstNumberLabel.text = String(previousNumber) + "-"
+                if result == 0 {
+                    result = currentNumber
+                } else {
+                    result -= currentNumber
+                }
+                
+                currentNumberLabel.text = String(format: "%g", result) + "-"
                 resultLabel.text = "0"
-                firstNumber = 0
+                currentNumber = 0
                 break
             case 13 :
                 //multiply
-                firstNumberLabel.text = String(previousNumber) + "x"
+                if result == 0 {
+                    result = 1
+                }
+                result *= currentNumber
+                currentNumberLabel.text = String(format: "%g", result) + "x"
                 resultLabel.text = "0"
-                firstNumber = 0
+                currentNumber = 0
                 break
             case 14 :
                 //divide
-                firstNumberLabel.text = String(previousNumber) + "÷"
+                result /= currentNumber
+                if currentNumber == 0 {
+                    resultLabel.text = "∞"
+                    currentNumberLabel.text = "∞"
+                    return
+                }
+                currentNumberLabel.text = String(format: "%g", result) + "÷"
                 resultLabel.text = "0"
-                firstNumber = 0
+                currentNumber = 0
                 break
             case 15 :
                 //reminder operator
-                firstNumberLabel.text = String(previousNumber) + "%"
+                currentNumberLabel.text = String(format: "%g", result) + "%"
                 resultLabel.text = "0"
-                firstNumber = 0
+                currentNumber = 0
                 break
-                //wher back button
+            //wher back button
             default:
                 //unary operater
-                resultLabel.text = String(-previousNumber)
-                firstNumber = Double(resultLabel.text!)!
-                firstNumberLabel.text = resultLabel.text
+                resultLabel.text = String(format: "%g", -previousNumber)
+                currentNumber = Double(resultLabel.text!)!
+                currentNumberLabel.text = resultLabel.text
+                result = currentNumber
                 break
             }
-           
+            
             operation = sender.tag
             perfomingMath = true
             equalButton.isEnabled = true
         }
-        
+            
         else if sender.tag == 17
         {
-       
+            
+            
+            let tempResult = result
+            
+            if result == 0 {
+                result = previousNumber
+            }
             switch (operation)
             {
             case 11 :
-                resultLabel.text = String(previousNumber + firstNumber)
-                firstNumberLabel.text = String(previousNumber) + "+" + String(firstNumber)
+                result += currentNumber
+                print("result \(result)")
+                resultLabel.text = String(format: "%g", result)
+                currentNumberLabel.text = String(format: "%g", tempResult) + "+" + String(format: "%g", currentNumber) + " = " + String(format: "%g", result)
                 break
             case 12 :
-                resultLabel.text = String(previousNumber - firstNumber)
-                firstNumberLabel.text = String(previousNumber) + "-" + String(firstNumber)
+                result -= currentNumber
+                resultLabel.text = String(format: "%g", result)
+                currentNumberLabel.text = String(format: "%g", tempResult) + "-" + String(format: "%g", currentNumber) + " = " + String(format: "%g", result)
                 break
             case 13 :
-                resultLabel.text = String(previousNumber * firstNumber)
-                firstNumberLabel.text = String(previousNumber) + "x" + String(firstNumber)
+                result *= currentNumber
+                resultLabel.text = String(format: "%g", result)
+                currentNumberLabel.text = String(format: "%g", tempResult) + "x" + String(format: "%g", currentNumber) + " = " + String(format: "%g", result)
                 break
             case 14 :
-                resultLabel.text = String(format: "%.2f",(previousNumber / firstNumber))
-                firstNumberLabel.text = String(previousNumber) + "÷" + String(firstNumber)
+                result /= currentNumber
+                resultLabel.text = String(format: "%g", result)
+                currentNumberLabel.text = String(format: "%g", tempResult) + "÷" + String(format: "%g", currentNumber) + " = " + String(format: "%g", result)
                 if resultLabel.text == "inf" {
                     
                     resultLabel.text = "∞"
                     if resultLabel.text == "∞" {
                         resultLabel.text = "0"
-                        firstNumber = 0
+                        currentNumber = 0
                         previousNumber = 0
-                        firstNumberLabel.text = ""
+                        currentNumberLabel.text = ""
                         perfomingMath = false
                     }
-               
-                    
                     
                 }else if resultLabel.text == "-inf"
                 {
                     
                     resultLabel.text = "0"
-                    firstNumber = 0
+                    currentNumber = 0
                     previousNumber = 0
-                    firstNumberLabel.text = ""
+                    currentNumberLabel.text = ""
                     perfomingMath = false
-                        
+                    
                     
                 }
                 break
             case 15 :
-                resultLabel.text = String(previousNumber.truncatingRemainder(dividingBy: firstNumber))
-                firstNumberLabel.text = String(previousNumber) + "%" + String(firstNumber)
+                if previousNumber < currentNumber {
+                    resultLabel.text = "0"
+                    currentNumberLabel.text = "0"
+                    return
+                }
+                resultLabel.text = String(format: "%2g", previousNumber.truncatingRemainder(dividingBy: currentNumber))
+                currentNumberLabel.text = String(format: "%2g",  previousNumber) + "%" + String(format: "%2g", currentNumber)
                 break
             default :
                 equalButton.isEnabled = false
-                firstNumberLabel.text = ""
+                currentNumberLabel.text = ""
                 break
             }
-      
+            
         }
         else if sender.tag == 18
         {
-            firstNumber = 0
+            currentNumber = 0
             previousNumber = 0
             //firstNumberLabel.text = String(previousNumber)
-            firstNumberLabel.text = ""
+            currentNumberLabel.text = ""
             resultLabel.text = "0"
             perfomingMath = false
+            result = 0
         }
     }
     @IBAction func dotButton(_ sender: customButton)
@@ -179,7 +217,7 @@ class ViewController: UIViewController {
     @IBInspectable
     public var cornerRadius: CGFloat = 0.0 {
         didSet {
-           self.layer.cornerRadius = self.cornerRadius
+            self.layer.cornerRadius = self.cornerRadius
         }
     }
 }
