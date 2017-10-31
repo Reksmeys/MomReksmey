@@ -359,8 +359,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="currentNumberLabel" destination="leL-Sq-yYM" id="fAZ-Wa-yrG"/>
                         <outlet property="equalButton" destination="x4P-V0-ZBg" id="rBG-f5-Glm"/>
-                        <outlet property="firstNumberLabel" destination="leL-Sq-yYM" id="fAZ-Wa-yrG"/>
                         <outlet property="resultLabel" destination="hDm-QL-n9p" id="ebG-kl-JNX"/>
                     </connections>
                 </viewController>

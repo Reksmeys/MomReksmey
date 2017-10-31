@@ -2,10 +2,11 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
+   
     @IBOutlet weak var equalButton: customButton!
     @IBOutlet weak var currentNumberLabel: UILabel!
     @IBOutlet weak var resultLabel: UILabel!
+    
     
     var currentNumber:Double = 0
     var perfomingMath = false
@@ -213,11 +214,13 @@ class ViewController: UIViewController {
     }
 }
 
+
 @IBDesignable class customButton: UIButton {
     @IBInspectable
     public var cornerRadius: CGFloat = 0.0 {
         didSet {
-            self.layer.cornerRadius = self.cornerRadius
+           self.layer.cornerRadius = self.cornerRadius
         }
     }
 }
+
